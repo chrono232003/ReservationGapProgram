@@ -1,24 +1,32 @@
 package com.cabin;
 
 import java.text.ParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-//    private final static long GAP = 3;
 //    private final static String filePath = "src/com/cabin/test-case.json";
 
     public static void main(String[] args) {
 
+        String filePath;
+        long gap;
+
         //ask user for path to json file
         Scanner scannerPath = new Scanner(System.in);
         System.out.println("Insert path to json file:");
-        String filePath = scannerPath.nextLine();
+        filePath = scannerPath.nextLine();
 
         //ask user to specify for minimum gap in days between bookings
-        Scanner scannerGap = new Scanner(System.in);
-        System.out.println("Enter minimum day gap between bookings:");
-        long gap = scannerGap.nextInt();
+        try {
+            Scanner scannerGap = new Scanner(System.in);
+            System.out.println("Enter minimum day gap between bookings:");
+            gap = scannerGap.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("The gap entered must be a number");
+            return;
+        }
 
         try {
             ReservationManager manager = new ReservationManager(gap, filePath);
