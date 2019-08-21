@@ -26,7 +26,8 @@ public class ReservationUtils {
             Object obj = parser.parse(new FileReader(filePath));
             return (JSONObject) obj;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //just returning null here as we do not want the command line user to see a stack trace.
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
