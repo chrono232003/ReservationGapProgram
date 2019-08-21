@@ -22,10 +22,9 @@ public class ReservationManager {
      * Uses the filepath and specified gap (in days) to determine cabin availability for specified timeframes
      * @return campsite/cabin list
      */
-    String getAvailableCampsites() throws ParseException {
+    public String getAvailableCampsites() throws ParseException {
         ReservationUtils reservationUtils = new ReservationUtils();
         JSONObject jsonObject = reservationUtils.parseFileToJson(filePath);
-
         if (jsonObject != null) {
 
             //get booking start and end date and store to variables
@@ -69,6 +68,6 @@ public class ReservationManager {
         } else {
             //json was null either by error or there was nothing there
             return "There was an error with the file you provided or the file was not found";
-        }
+    }
     }
 }

@@ -59,9 +59,9 @@ public class ReservationUtils {
         for (int i = 0; i < campsites.size(); i++) {
             JSONObject campsite = (JSONObject) campsites.get(i);
             if (campsiteIds.contains(campsite.get("id"))) {
-                builder.append(campsite.get("name") + "\n");
+                builder.append("\"" + campsite.get("name") + "\"\n");
             }
         }
-        return "These are the available campsites:\n" + builder.toString();
+        return builder.toString();
     }
 }
