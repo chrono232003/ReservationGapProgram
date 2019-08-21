@@ -12,14 +12,14 @@ public class DateUtils {
      * @param dateString
      * @return Date
      */
-    public Date parseDate(String dateString) {
+    public Date parseDate(String dateString) throws ParseException {
         Date date = new Date();
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             date = sdf.parse(dateString);
         } catch (ParseException pe) {
-            System.out.println("There was an issue parsing a date");
             pe.printStackTrace();
+            throw pe;
         }
         return date;
     }
@@ -30,7 +30,7 @@ public class DateUtils {
      * @param two
      * @return date differences in days
      */
-    long daysBetween(Date one, Date two) {
+    public long daysBetween(Date one, Date two) {
         long difference = (one.getTime()-two.getTime())/86400000;
         return Math.abs(difference);
     }

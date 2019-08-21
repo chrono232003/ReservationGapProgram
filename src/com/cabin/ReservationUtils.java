@@ -62,6 +62,6 @@ public class ReservationUtils {
                 builder.append(campsite.get("name") + "\n");
             }
         }
-        return builder.toString();
+        return "These are the available campsites:\n" + builder.toString();
     }
 }

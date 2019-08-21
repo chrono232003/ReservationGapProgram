@@ -2,6 +2,8 @@ package com.cabin;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -20,7 +22,7 @@ public class ReservationManager {
      * Uses the filepath and specified gap (in days) to determine cabin availability for specified timeframes
      * @return campsite/cabin list
      */
-    String getAvailableCampsites() {
+    String getAvailableCampsites() throws ParseException {
         ReservationUtils reservationUtils = new ReservationUtils();
         JSONObject jsonObject = reservationUtils.parseFileToJson(filePath);
 
@@ -42,20 +44,23 @@ public class ReservationManager {
             //run gap function on start date and return an array of campsiteIds
             DateUtils dateUtils = new DateUtils();
             for (int i = 0; i < reservations.size(); i++) {
-                JSONObject reservation = (JSONObject) reservations.get(i);
+                try {
+                    JSONObject reservation = (JSONObject) reservations.get(i);
 
-                Date startDateQuery = dateUtils.parseDate(startDate);
-                Date endDateQuery = dateUtils.parseDate(endDate);
+                    Date startDateQuery = dateUtils.parseDate(startDate);
+                    Date endDateQuery = dateUtils.parseDate(endDate);
 
-                Date reservationStartDate = dateUtils.parseDate((String) reservation.get("startDate"));
-                Date reservationEndDate = dateUtils.parseDate((String) reservation.get("endDate"));
+                    Date reservationStartDate = dateUtils.parseDate((String) reservation.get("startDate"));
+                    Date reservationEndDate = dateUtils.parseDate((String) reservation.get("endDate"));
 
-                if (reservationUtils.isValidGap(reservationStartDate, startDateQuery, gap)) {
-                    if (reservationUtils.isValidGap(reservationEndDate, endDateQuery, gap)) {
-                        campsiteIds.add(reservation.get(JsonEnum.CAMPSITEID.jsonNodeName));
+                    if (reservationUtils.isValidGap(reservationStartDate, startDateQuery, gap)) {
+                        if (reservationUtils.isValidGap(reservationEndDate, endDateQuery, gap)) {
+                            campsiteIds.add(reservation.get(JsonEnum.CAMPSITEID.jsonNodeName));
+                        }
                     }
+                } catch (ParseException pe) {
+                    throw pe;
                 }
-
             }
 
             JSONArray campsites = (JSONArray) jsonObject.get(JsonEnum.CAMPSITES.jsonNodeName);

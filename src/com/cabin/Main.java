@@ -1,5 +1,7 @@
 package com.cabin;
 
+import java.text.ParseException;
+
 public class Main {
 
     private final static long GAP = 3;
@@ -13,10 +15,14 @@ public class Main {
 //
 //        String filePath = myObj.nextLine();
 
-        ReservationManager manager = new ReservationManager(GAP, filePath);
-        String availableCampsites = manager.getAvailableCampsites();
+        try {
+            ReservationManager manager = new ReservationManager(GAP, filePath);
+            String availableCampsites = manager.getAvailableCampsites();
 
-        System.out.println("These are the available campsites:\n" + availableCampsites);
-        //System.out.println(System.getProperty("user.dir"));
+            System.out.println(availableCampsites);
+            //System.out.println(System.getProperty("user.dir"));
+        } catch (ParseException pe) {
+            System.out.println("There are issues with the dates in the json and the program is not able to parse one or more of them.");
+        }
     }
 }

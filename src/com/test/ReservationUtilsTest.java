@@ -4,6 +4,8 @@ import com.cabin.DateUtils;
 import com.cabin.ReservationUtils;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
+
+import java.text.ParseException;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,29 +46,41 @@ public class ReservationUtilsTest {
 
     @Test
     public void isValidGapTrueTest() {
-        long gap = 4;
-        Date reservationDate = dateUtils.parseDate("2019-05-10");
-        Date inputDate = dateUtils.parseDate("2019-05-15");
-        boolean isValidGap = resUtils.isValidGap(inputDate, reservationDate, gap);
-        assert isValidGap;
+        try {
+            long gap = 4;
+            Date reservationDate = dateUtils.parseDate("2019-05-10");
+            Date inputDate = dateUtils.parseDate("2019-05-15");
+            boolean isValidGap = resUtils.isValidGap(inputDate, reservationDate, gap);
+            assert isValidGap;
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
     public void isValidGapFalseTest() {
-        long gap = 4;
-        Date reservationDate = dateUtils.parseDate("2019-05-10");
-        Date inputDate = dateUtils.parseDate("2019-05-13");
-        boolean isValidGap = resUtils.isValidGap(inputDate, reservationDate, gap);
-        assert !isValidGap;
+        try {
+            long gap = 4;
+            Date reservationDate = dateUtils.parseDate("2019-05-10");
+            Date inputDate = dateUtils.parseDate("2019-05-13");
+            boolean isValidGap = resUtils.isValidGap(inputDate, reservationDate, gap);
+            assert !isValidGap;
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
     public void isValidGapErrorTest() {
-        long gap = 4;
-        Date reservationDate = dateUtils.parseDate("2019-05-10");
-        Date inputDate = null;
-        assertThrows(NullPointerException.class, () -> {
-            resUtils.isValidGap(inputDate, reservationDate, gap);
-        });
+        try {
+            long gap = 4;
+            Date reservationDate = dateUtils.parseDate("2019-05-10");
+            Date inputDate = null;
+            assertThrows(NullPointerException.class, () -> {
+                resUtils.isValidGap(inputDate, reservationDate, gap);
+            });
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 }
